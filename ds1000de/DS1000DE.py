@@ -14,4 +14,4 @@ class DS1000DE(object):
         
         self.resource = resource[0]
         
-        self.scope = rm.open_resource(self.resource)
+        self.inst = rm.open_resource(self.resource)

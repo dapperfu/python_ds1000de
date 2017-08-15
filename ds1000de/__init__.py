@@ -2,8 +2,8 @@
 # For development to determine if the module has reloaded.
 from uuid import uuid4
 
-from .MHS5200 import MHS5200
+from .DS1000DE import DS1000DE
 
 uuid = uuid4()
 
-__all__ = ["MHS5200"]
+__all__ = ["DS1000DE"]
