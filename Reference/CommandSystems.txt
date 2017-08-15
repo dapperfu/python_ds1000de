@@ -1,0 +1,1709 @@
+General Commands
+IEEE standard defineds common commands for querying or executing some basic information about instrument, which usually begins with "*" and holds 3-character long command keywords.
+DS1000E, DS1000D series digital oscilloscopes support following IEEE488.2 commands:
+*IDN?
+*RST
+The detailed information of each command are given as follows:
+1. *IDN?
+Command Format:
+*IDN?
+Function Explanation:
+The command queries the ID character string of the instrument, including a field separated by 4 commas: manufactory, model, serial number and the version number composed of numbers and separated by "." .
+Returned Format:
+RIGOL TECHNOLOGIES,<model>, <serial number>, <software version number>.
+Example:
+RIGOL TECHNOLOGIES,DS1102E,DS1EB104702974,00.02.01.01.00
+2. *RST
+Command Format:
+*RST
+Function Explanation:
+The command resets the system parameters.
+SYSTem Commands
+SYSTem Commands are the fundamental commands for the operation of an oscilloscope. They can either be used for operational control or screen data interception and more.
+SYSTem Commands include:
+:RUN
+:STOP
+:AUTO
+:HARDcopy
+The detailed information of each command are given as follows:
+1. :RUN
+Command Format:
+:RUN
+Function Explanation:
+The command initiates the oscilloscope to acquire waveform data according to its current settings. Acquisition runs continuously until the oscilloscope receives a :STOP command.
+2. :STOP
+Command Format:
+:STOP
+Function Explanation:
+The command controls the oscilloscope to stop acquiring data. To restart the acquisition, use the :RUN command.
+3. :AUTO
+Command Format:
+:AUTO
+Function Explanation:
+The command controls the oscilloscope to evaluate all input waveforms characteristics and set the optimum conditions to display the waveforms.
+4. :HARDcopy
+Command Format:
+:HARDcopy
+Function Explanation:
+The command is to extract the current information on the screen and save the bitmap into the U disc in the form of "HardCopyxxx.bmp". (Note: this command is unavailable in file system)
+ACQuire Commands
+ACQuire Commands set the acquire mode for the oscilloscope, including:
+:ACQuire:TYPE
+:ACQuire:MODE
+:ACQuire:AVERages
+:ACQuire:SAMPlingrate?
+:ACQuire:MEMDepth <depth>
+The detailed information of each command are given as follows:
+1. :ACQuire:TYPE
+Command Format:
+:ACQuire:TYPE <type>
+:ACQuire:TYPE?
+Function Explanation:
+The commands set and query the current acquire type of the oscilloscope. <type> could be NORMal, AVERage or PEAKdetect.
+Returned Format:
+The query returns NORMAL, AVERAGE or PEAKDETECT.
+Example:
+:ACQ:TYPE AVER Setup the acquire type as Average.
+:ACQ:TYPE? The query returns AVERAGE.
+2. :ACQuire:MODE
+Command Format:
+:ACQuire:MODE <mode>
+:ACQuire:MODE?
+Function Explanation:
+The commands set and query the current acquire mode of the oscilloscope. <mode> could be RTIMe (Real time Sampling) or ETIMe (Equivalent Sampling).
+Returned Format:
+The query returns REAL_TIME or EQUAL_TIME.
+Example:
+:ACQ:MODE ETIM Setup the acquire mode as ETIMe.
+:ACQ:MODE? The query returns EQUAL_TIME.
+3. :ACQuire:AVERages
+Command Format:
+:ACQuire:AVERages <count>
+:ACQuire:AVERages?
+Function Explanation:
+The commands set and query the average numbers in Average mode. <count> could be and integer of 2 times the power of N within 2 and 256.
+Returned Format:
+The query returns 2, 4, 8, 16, 32, 64, 128 or 256.
+Example:
+:ACQ:AVER 16 Setup the average acquisition time as 16.
+:ACQ:AVER? The query returns 16.
+4. :ACQuire:SAMPlingrate?
+Command Format:
+:ACQuire:SAMPlingrate? {CHANnel<n>|DIGITAL}
+Function Explanation:
+The command queries the current sampling rate of the analog channel or digital channel (only for DS1000D series). <n> is 1 or 2 means channel 1 or channel 2.
+Returned Format:
+The query returns the setting value of the sampling rate.
+Example:
+:ACQ:SAMP? CHANnel2 Query the sampling rate for channel 2.
+100000000.000000 The query returns 100M.
+5. :ACQuire:MEMDepth <depth>
+Command Format:
+:ACQuire:MEMDepth <depth>
+:ACQuire:MEMDepth?
+Function Explanation:
+The commands set and query the memory depth of the oscilloscope. <depth> could be LONG (long memory) or NORMal (normal memory)
+Returned Format:
+The query returns LONG or NORMAL.
+Example:
+:ACQ:MEMD LONG Set the memory type as LONG.
+:ACQ:MEMD? The query returns LONG.
+DISPlay Commands
+DISPlay Commands setup the display type of the oscilloscope.
+DISPlay Commands include:
+:DISPlay:TYPE
+:DISPlay:GRID
+:DISPlay:PERSist
+:DISPlay:MNUDisplay
+:DISPlay:MNUStatus
+:DISPlay:CLEar
+:DISPlay:BRIGhtness
+:DISPlay:INTensity
+The detailed information of each command are given as follows:
+1. :DISPlay:TYPE
+Command Format:
+:DISPlay:TYPE <type>
+:DISPlay:TYPE?
+Function Explanation:
+The commands set and query the display type between sampling points. <type> could be VECTors ( vectir display) or DOTS (point display).
+Returned Format:
+The query returns VECTORS or DOTS.
+Example:
+:DISP:TYPE VECT Setup the display type as VECTors.
+:DISP:TYPE? The query returns VECTORS.
+2. :DISPlay:GRID
+Command Format:
+:DISPlay:GRID <grid>
+:DISPlay:GRID?
+Function Explanation:
+The commands set and query the state of the screen grid. <grid> could be FULL (open the background grid and coordinates), HALF (turn off the background grid) or NONE (turn off the background grid and coordinates).
+Returned Format:
+The query returns FULL, HALF or NONE.
+Example:
+:DISP:GRID FULL Open the background grid and coordinates.
+:DISP:GRID? The query returns FULL.
+3. :DISPlay:PERSist
+Command Format:
+:DISPlay:PERSist {ON|OFF}
+:DISPlay:PERSist?
+Function Explanation:
+The commands set and query the state of the waveform persist. "ON" denotes the record points hold until disable the presist, "OFF" denotes the record point varies in high refresh rate.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:DISP:PERS ON Enable the waveform persist.
+:DISP:PERS? The query returns ON.
+4. :DISPlay:MNUDisplay
+Command Format:
+:DISPlay:MNUDisplay <time>
+:DISPlay:MNUDisplay?
+Function Explanation:
+The commands set and query the time for hiding menus automatically. <time> could be 1s, 2s, 5s, 10s, 20s or Infinite.
+Returned Format:
+The query returns 1s, 2s, 5s, 10s, 20s or Infinite.
+Example:
+:DISP:MNUD 10 Setup the display time of menu as 10s.
+:DISP:MNUD? The query returns 10s.
+5. :DISPlay:MNUStatus
+Command Format:
+:DISPlay:MNUStatus {ON|OFF}
+:DISPlay:MNUStaus?
+Function Explanation:
+The commands set and query the state of the operation menu.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:DISP:MNUS ON Open menu for current operation.
+:DISP:MNUS? The query returns ON
+6. :DISPlay:CLEar
+Command Format:
+:DISPlay:CLEar
+Function Explanation:
+The command clears out of date waveforms on the screen during waveform persist.
+7. :DISPlay:BRIGhtness
+Command Format:
+:DISPlay:BRIGhtness <ncount>
+:DISPlay:BRIGhtness?
+Function Explanation:
+The commands set and query the brightness of the grid. The range of <ncount> is from 0 to 32 (from dark to bright).
+Returned Format:
+The query returns the setting value of <ncount>.
+Example:
+:DISP:BRIG 10 Setup the grid brightness as 10.
+:DISP:BRIG? The query returns 10.
+8. :DISPlay:INTensity
+Command Format:
+:DISPlay:INTensity <count>
+:DISPlay:INTensity?
+Function Explanation:
+The commands set and query the brightness of the waveform. <count> could be the integer between 0 and 32.
+Returned Format:
+The query returns the setting value of <count>.
+Example:
+:DISP:INT 12 Setup the waveform brightness as 12.
+:DISP:INT? The query returns 12.
+TIMebase Commands
+TIMebase Commands set the horizontal scale (time base) and the waveform horizontal position in the memory (trigger offset). The waveform will enlarge or shrink among various horizontal scale.
+TIMebase Commands include:
+:TIMebase:MODE
+:TIMebase[:DELayed]:OFFSet
+:TIMebase[:DELayed]:SCALe
+:TIMebase:FORMat
+The detailed information of each command are given as follows:
+1. :TIMebase:MODE
+Command Format:
+:TIMebase:MODE <mode>
+:TIMebase:MODE?
+Function Explanation:
+The commands set and query the scan mode of horizontal timebase. <mode> could be MAIN (main timebase) or DELayed (delayed scan).
+Returned Format:
+The query returns MAIN or DELAYED.
+Example:
+:TIM:MODE MAIN Setup the horizontal timebase as MAIN.
+:TIM:MODE? The query returns MAIN.
+2. :TIMebase[:DELayed]:OFFSet
+Command Format:
+:TIMebase[:DELayed]:OFFSet <offset>
+:TIMebase[:DELayed]:OFFSet?
+Function Explanation:
+The commands set and query the offset of the MAIN or DELayed timebase (that is offset of the waveform position relative to the trigger midpoint.). Thereinto,
+In NORMAL mode, the range of <scale_val> is 1s ~ end of the memory;
+In STOP mode, the range of <scale_val> is -500s ~ +500s;
+In SCAN mode, the range of <scale_val> is -6*Scale ~ +6*Scale; (Note: Scale indicates the current horizontal scale, the unit is s/div.)
+In MAIN state, the item [:DELayed] should be omitted.
+Returned Format:
+The query returns the setting value of the <offset> in s.
+Example:
+:TIM:MODE MAIN Setup the scan mode of horizontal timebase as MAIN.
+:TIM:OFFS 1 Setup the offset as 1s.
+:TIM:OFFS? The query returns 1.000e+00.
+3. :TIMebase[:DELayed]:SCALe
+Command Format:
+:TIMebase[:DELayed]:SCALe <scale_val>
+:TIMebase[:DELayed]:SCALe?
+Function Explanation:
+The commands set and query the horizontal scale for MAIN or DELayed timebase, the unit is s/div (seconds/grid), thereinto:
+In YT mode, the range of <scale_val> is 2ns - 50s;
+In ROLL mode, the range of <scale_val> is 500ms - 50s;
+In MAIN state, the item [:DELayed] should be omitted.
+Returned Format:
+The query returns the setting value of <scale_val> in s.
+Example:
+:TIM:MODE MAIN Setup the timebase as MAIN.
+:TIM:SCAL 2 Setup its scale as 2s.
+:TIM:SCAL? The query returns 2.000e+00.
+4. :TIMebase:FORMat
+Command Format:
+:TIMebase:FORMat <value>
+:TIMebase:FORMat?
+Function Explanation:
+The commands set and query the horizontal timebase. <value> could be XY, YT or SCANning.
+Returned Format:
+The query returns X-Y, Y-T or SCANNING.
+Example:
+:TIM:FORM YT Setup the form of grid as YT.
+:TIM:FORM? The query returns Y-T.
+TRIGger Commands
+In order to make the waveform displayed more stable, it is necessary to set the trigger system. The trigger determines when the oscilloscope starts to acquire data and display a waveform. If a trigger is set up properly, it converts unstable displays into meaningful waveforms.
+When the oscilloscope starts to acquire a waveform, it collects enough data so that it can display the waveform to the left of the trigger point. The oscilloscope continues to acquire data while waiting for the trigger condition to occur. After it detects a trigger, the oscilloscope continues to acquire enough data so that it can display the waveform to the right of the trigger point.
+The available trigger mode provided by DS1000E, DS1000D series digital oscilloscopes are: Edge, Pulse, Video, Slope, Pattern, Duration and Alternation.
+Trigger Commands include:
+Trigger Control
+:TRIGger:MODE
+:TRIGger<mode>:SOURce
+:TRIGger<mode>:LEVel
+:TRIGger<mode>:SWEep
+:TRIGger<mode>:COUPling
+:TRIGger:HOLDoff
+:TRIGger:STATus?
+:Trig%50
+:FORCetrig
+EDGE Trigger
+:TRIGger:EDGE:SLOPe
+:TRIGger:EDGE:SENSitivity
+PULSe Trigger
+:TRIGger:PULSe:MODE
+:TRIGger:PULSe:SENSitivity
+:TRIGger:PULSe:WIDTh
+VIDEO Trigger
+:TRIGger:VIDEO:MODE
+:TRIGger:VIDEO:POLarity
+:TRIGger:VIDEO:STANdard
+:TRIGger:VIDEO:LINE
+:TRIGger:VIDEO:SENSitivity
+SLOPe Trigger
+:TRIGger:SLOPe:TIME
+:TRIGger:SLOPe:SENSitivity
+:TRIGger:SLOPe:MODE
+:TRIGger:SLOPe:WINDow
+:TRIGger:SLOPe:LEVelA
+:TRIGger:SLOPe:LEVelB
+PATTern Trigger
+:TRIGger:PATTern:PATTern
+DURation Trigger
+:TRIGger:DURation:PATTern
+:TRIGger:DURation:TIME
+:TRIGger:DURation:QUALifier
+ALTernation trigger
+:TRIGger:ALTernation:SOURce
+:TRIGger:ALTernation:TYPE
+:TRIGger:ALTernation:TimeSCALe
+:TRIGger:ALTernation:TimeOFFSet
+:TRIGger:ALTernation<mode>:LEVel
+:TRIGger:ALTernation:EDGE:SLOPe
+:TRIGger:ALTernation<mode>:MODE
+:TRIGger:ALTernation<mode>:TIME
+:TRIGger:ALTernation:VIDEO:POLarity
+:TRIGger:ALTernation:VIDEO:STANdard
+:TRIGger:ALTernation:VIDEO:LINE
+:TRIGger:ALTernation:SLOPe:WINDow
+:TRIGger:ALTernation:SLOPe:LEVelA
+:TRIGger:ALTernation:SLOPe:LEVelB
+:TRIGger:ALTernation<mode>:COUPling
+:TRIGger:ALTernation<mode>:HOLDoff
+:TRIGger:ALTernation<mode>:SENSitivity
+The detailed information of each command are given as follows:
+Trigger Control
+1. :TRIGger:MODE
+Command Format:
+:TRIGger:MODE <mode>
+:TRIGger:MODE?
+Function Explanation:
+The commands set and query the mode of trigger. <mode> could be EDGE, PULSe, VIDEO, SLOPe, PATTern, DURation or ALTernation.
+Returned Format:
+The query returns EDGE, PULSE, VIDEO, SLOPE, PATTERN, DURATION or ALTERNATION.
+Example:
+:TRIG:MODE EDGE Setup the trigger mode as EDGE.
+:TRIG:MODE? The query returns EDGE.
+2. :TRIGger<mode>:SOURce
+Command Format:
+:TRIGger<mode>:SOURce <src>
+:TRIGger<mode>:SOURce?
+Function Explanation:
+The commands set and query the trigger source. <src> could be the input channel (CHANnel1, CHANnel2), external trigger channel (EXT), AC Line (Mains supply) or digital channel (Digital).
+In EDGE mode, <src> could be CHANnel<n>, EXT, ACLine or DIGital<m>;
+In PULSe mode, <src> could be CHANnel<n>, EXT or DIGital<m>;
+In SLOPe mode, <src> could be CHANnel<n> or EXT;
+In VIDEO mode, <src> could be CHANnel<n> or EXT;
+Thereinto, <n> could be 1 or 2; the range of <m> is 0~15.
+Returned Format:
+The query returns CH1, CH2, EXT, ACLINE, D0~D15.
+Example:
+:TRIG:EDGE:SOUR CHAN1 Setup the soure of edge trigger as CHANnel1.
+:TRIG:EDGE:SOUR? The query returns CH1.
+3. :TRIGger<mode>:LEVel
+Command Format:
+:TRIGger<mode>:LEVel <level>
+:TRIGger<mode>:LEVel?
+Function Explanation:
+The commands set and query the trigger level. <level> could be :EDGE, :PULSe or :VIDEO; the range is: -6*Scale~+6*Scale, Scale indicates the current vertical scale, the unit is V/div.
+Returned Format:
+The query returns the setting value of <level> in V.
+Example:
+:TRIG:EDGE:LEV 1 Setup the level of EDGE trigger as 1.
+:TRIG:EDGE:LEV? The query returns 1.00e+00.
+4. :TRIGger<mode>:SWEep
+Command Format:
+:TRIGger<mode>:SWEep {AUTO|NORMal|SINGle}
+:TRIGger<mode>:SWEep?
+Function Explanation:
+The commands set and query the trigger type. <mode>could be :EDGE,
+:PULSe, :SLOPe, :PATTern or :DURation.
+Returned Format:
+The query returns AUTO, NORMAL or SINGLE.
+Example:
+:TRIG:EDGE:SWE AUTO Setup the trigger type as AUTO.
+:TRIG:EDGE:SWE? The query returns AUTO.
+5. :TRIGger<mode>:COUPling
+Command Format:
+:TRIGger<mode>:COUPling {DC|AC|HF|LF}
+:TRIGger<mode>:COUPling?
+Function Explanation:
+The commands set and query the coupling type. Thereinto,
+DC: Allow all signals pass.
+AC: Block DC signals and attenuate the signals lower than 10Hz.
+HF: Reject high frequency signals (Higher than 150KHz).
+LF: Reject DC signals and attenuate low frequency signals (Lower than 8KHz).
+<mode> could be :EDGE, :PULSe or :SLOPe.
+Returned Format:
+The query returns DC, AC, HF or LF.
+Example:
+:TRIG:EDGE:COUP DC Setup the coupling type as DC.
+:TRIG:EDGE:COUP? The query returns DC.
+6. :TRIGger:HOLDoff
+Command Format:
+:TRIGger:HOLDoff <count>
+:TRIGger:HOLDoff?
+Function Explanation:
+The commands set and query the trigger holfoff time. The range of <count> is <count>: 500ns~1.5s.
+Returned Format:
+The query returns the setting value of <count> in s.
+Example:
+:TRIG:HOLD 0.0005 Setup the holdoff time as 500ms.
+:TRIG:HOLDoff? The query returns 5.000e-04
+7. :TRIGger:STATus?
+Command Format:
+:TRIGger:STATus?
+Function Explanation:
+The command queries the operating status of the oscilloscope. The status could be RUN, STOP, T`D, WAIT or AUTO.
+Returned Format:
+The query returns RUN, STOP, T'D, WAIT or AUTO.
+8. :Trig%50
+Command Format:
+:Trig%50
+Function Explanation:
+The command sets the trigger level to the vertical midpoint of amplitude.
+9. :FORCetrig
+Command Format:
+:FORCetrig
+Function Explanation:
+The command forces the oscilloscope to trigger signal, which is usually used in "Normal" and "Single" mode.
+EDGE Trigger
+1. :TRIGger:EDGE:SLOPe
+Command Format:
+:TRIGger:EDGE:SLOPe {POSitive|NEGative}
+:TRIGger:EDGE:SLOPe?
+Function Explanation:
+The commands set and query the type of edge trigger. The type could be POSitive (Rising edge) or NEGative (Failing edge).
+Returned Format:
+The query returns POSITIVE or NEGATIVE.
+Example:
+:TRIG:EDGE:SLOP POS Set up the edge of trigger as POSitive.
+:TRIG:EDGE:SLOP? The query returns POSITIVE.
+2. :TRIGger:EDGE:SENSitivity
+Command Format:
+:TRIGger:EDGE:SENSitivity <count>
+:TRIGger:EDGE:SENSitivity?
+Function Explanation:
+The commands set and query the sensitive of edge trigger. The range of <count> could be 0.1div~1div.
+Returned Format:
+The query returns the setting value <count> in div.
+Example:
+:TRIG:EDGE:SENS 0.5 Setup the sensitive as 0.5div. :TRIG:EDGE:SENS？ The query returns 5.00e-01.
+PULSe Trigger
+1. :TRIGger:PULSe:MODE
+Command Format:
+:TRIGger:PULSe:MODE <mode>
+:TRIGger:PULSe:MODE?
+Function Explanation:
+The commands set and query the pulse condition. <mode> could be +GREaterthan (positive pulse greater than), +LESSthan (positive pulse less than), +EQUal (positive pulse equals to), -GREaterthan (negative pulse greater than), -LESSthan (negative pulse less than) or –EQUal (negative pulse equals to).
+Returned Format:
+The query returns +GREATER THAN, +LESS THAN, +EQUAL, -GREATER THAN, -LESS THAN or -EQUAL.
+Example:
+:TRIG:PULS:MODE +GRE Setup the trigger condition as +GREaterthan.
+:TRIG:PULS:MODE? The query returns +GREATER THAN.
+2. :TRIGger:PULSe:SENSitivity
+Command Format:
+:TRIGger:PULSe:SENSitivity <count>
+:TRIGger:PULSe:SENSitivity?
+Function Explanation:
+The commands set and query the sensitive of pulse trigger. The range of <count> could be 0.1div~1div.
+Returned Format:
+The query returns the setting value of <count> in div.
+Example:
+:TRIG:PULS:SENS 0.5 Setup the sensitive as 0.5div.
+:TRIG:PULS:SENS? The query returns 5.00e-01.
+3. :TRIGger:PULSe:WIDTh
+Command Format:
+:TRIGger:PULSe:WIDTh <wid>
+:TRIGger:PULSe:WIDTh?
+Function Explanation:
+The commands set and query the pulse width. The range of <wid> is 20ns ~ 10s.
+Returned Format:
+The query returns the setting value of the <wid> in s.
+Example:
+:TRIG:PULS:WIDT 0.001 Setup the width of the pulse as 1ms.
+:TRIG:PULS:WIDT? The query returns 1.000e-03.
+VIDEO Trigger
+1. :TRIGger:VIDEO:MODE
+Command Format:
+:TRIGger:VIDEO:MODE <mode>
+:TRIGger:VIDEO:MODE?
+Function Explanation:
+The commands set and query the synchronous mode of the video trigger. <mode> could be ODDfield, EVENfield, LINE or ALLlines.
+Returned Format:
+The query returns ODD FIELD, EVEN FIELD, LINE or ALL LINES.
+Example:
+:TRIG:VIDEO:MODE EVEN Setup the synchronous mode as EVENfield.
+:TRIG:VIDEO:MODE? The query returns EVEN FIELD
+2. :TRIGger:VIDEO:POLarity
+Command Format:
+:TRIGger:VIDEO:POLarity {POSitive|NEGative}
+:TRIGger:VIDEO:POLarity?
+Function Explanation:
+The commands set and query the video polarity. The polarity could be POSitive or NEGative.
+Returned Format:
+The query returns POSITIVE or NEGATIVE.
+Example:
+:TRIG:VIDEO:POL POS Setup the polarity of video trigger as POSitive.
+:TRIG:VIDEO:POL? The query returns POSITIVE.
+3. :TRIGger:VIDEO:STANdard
+Command Format:
+:TRIGger:VIDEO:STANdard {NTSC|PALSecam}
+:TRIGger:VIDEO:STANdard?
+Function Explanation:
+The commands set and query the type of video trigger standard.
+Returned Format:
+The query returns NTSC or PAL/SECAM.
+Example:
+:TRIG:VIDEO:STAN PALS Setup the video standard as PALSecam.
+:TRIG:VIDEO:STAN? The query returns PAL/SECAM.
+4. :TRIGger:VIDEO:LINE
+Command Format:
+:TRIGger:VIDEO:LINE <value>
+:TRIGger:VIDEO:LINE?
+Function Explanation:
+The commands set and query the number of specified line of synchronous. In NTSC standard, the range of <value> is 1~525; in PAL/SECAM standard, the range of <value> is 1~625.
+Returned Format:
+The query returns the numbers of current line.
+Example:
+:TRIG:VIDEO:LINE 25 Setup the number of specified line as 25.
+:TRIG:VIDEO:LINE? The query returns 25.
+5. :TRIGger:VIDEO:SENSitivity
+Command Format:
+:TRIGger:VIDEO:SENSitivity <count>
+:TRIGger:VIDEO:SENSitivity?
+Function Explanation:
+The commands set and query the trigger sensitive, the range of <count> is: 0.1div ~1div.
+Returned Format:
+The query returns the setting value of <count> in div.
+Example:
+:TRIG:VIDEO:SENS 0.5 Setup the trigger sensitive as 0.5div.
+:TRIG:VIDEO:SENS? The query returns 5.00e-01.
+SLOPe Trigger
+1. :TRIGger:SLOPe:TIME
+Command Format:
+:TRIGger:SLOPe:TIME <count>
+:TRIGger:SLOPe:TIME?
+Function Explanation:
+The commands set and query the time setting about slope trigger. The range of <count> is 20ns~10s.
+Returned Format:
+The query returns the setting value of <count> in s.
+Example:
+:TRIG:SLOP:TIME 0.01 Setup the slope time is 10ms.
+:TRIG:SLOP:TIME? The query returns 1.000e-02.
+2. :TRIGger:SLOPe:SENSitivity
+Command Format:
+:TRIGger:SLOPe:SENSitivity <count>
+:TRIGger:SLOPe:SENSitivity?
+Function Explanation:
+The commands set and query the trigger sensitive. The range of <count> is: 0.1div ~1div.
+Returned Format:
+The query returns the setting value of <count> in div.
+Example:
+:TRIG:SLOP:SENS 0.5 Setup the trigger sensitive as 0.5div
+:TRIG:SLOP:SENS? The query returns 5.00e-01
+3. :TRIGger:SLOPe:MODE
+Command Format:
+:TRIGger:SLOPe:MODE <mode>
+:TRIGger:SLOPe:MODE?
+Function Explanation:
+The commands set and query the slope condition. <mode> could be
++GREaterthan (positive slope greater than), +LESSthan (positive slope less
+than), + EQUal (positive slope equals to), -GREaterthan (negative slope greater
+than), -LESSthan (negative slope less than) or –EQUal (negative slope equals
+to).
+Returned Format:
+The query returns +GREATER THAN, +LESS THAN, +EQUAL, -GREATER THAN,
+-LESS THAN 或-EQUAL.
+Example:
+:TRIG:SLOP:MODE +GRE Setup the slope condition as +GREaterthan.
+:TRIG:SLOPe:MODE? The query returns +GREATER THAN.
+4. :TRIGger:SLOPe:WINDow
+Command Format:
+:TRIGger:SLOPe:WINDow <count>
+:TRIGger:SLOPe:WINDow?
+Function Explanation:
+The commands set and query the type of trigger level which can be adjusted by
+.
+When the slope condition is +GREaterthan, +LESSthan or + EQUal, <count>
+could be PA (rising edge Level A), PB (rising edge Level B) or PAB (rising edge
+Level AB);
+When the slope condition is -GREaterthan, -LESSthan or –EQUal, <count> could
+be NA (falling edge Level A), NB (falling edge LevelB) or NAB (falling edge
+LevelAB).
+Returned Format:
+The query returns P_WIN_A, P_WIN_B, P_WIN_AB, N_WIN_A, N_WIN_B or N_WIN_AB.
+Example:
+:TRIG:SLOP:WIND PA Setup the type of trigger level as rising edge Level A
+:TRIG:SLOP:WIND? The query returns P_WIN_A.
+5. :TRIGger:SLOPe:LEVelA
+Command Format:
+:TRIGger:SLOPe:LEVelA <value>
+:TRIGger:SLOPe:LEVelA?
+Function Explanation:
+The commands set and query the upper boundary "Level A" of trigger level. The range of <value> is LevelB~+ 6*Scale; Scale indicates the current vertical level, the unit is V/div.
+Returned Format:
+The query returns the setting value of level in V.
+Example:
+:TRIG:SLOP:LEVA 2 Setup the upper boundary of trigger level as 2V.
+:TRIG:SLOP:LEVA? The query returns 2.000e+00.
+6. :TRIGger:SLOPe:LEVelB
+Command Format:
+:TRIGger:SLOPe:LEVelB <value>
+:TRIGger:SLOPe:LEVelB?
+Function Explanation:
+The commands set and query the lower boundary "LEVel B" of trigger level. The range of <value> is -6*Scale~LevelA; Scale indicates the current vertical level, the unit is V/div.
+Returned Format:
+The query returns the setting value of level in V.
+Note: Level A (upper boundary) can not be less than the maximum of Level B (lower boundary).
+Example:
+:TRIG:SLOP:LEVB -1.5 Setup the lower boundary of trigger level as -1.5V.
+:TRIG:SLOP:LEVB? The query returns -1.500e+00.
+PATTern Trigger
+1. :TRIGger:PATTern:PATTern
+Command Format:
+:TRIGger:PATTern:PATTern <value>,<mask>, [<edge source>,<edge>]
+:TRIGger:PATTern:PATTern?
+Function Explanation:
+The commands set and query the type of pattern for digital signal. Thereinto,
+When <value> is a 16-bit integer without sign, high is 1, and low is o;
+When <mask> is an 16-bit integer without sign, enable is 1, and X is 0；
+The range of <edge source> is 0~15 (DIG0~DIG15);
+<edge> is 1 at rising edge and 0 at falling edge, separately.
+Returned Format:
+The query returns the setting value of <value>, <mask>, <edge source> and <edge> in turns. Thereinto, the value returned by <value> and <mask> is a decimal data.
+Example:
+:TRIG:PATT:PATT 65535,65535,2,1 Setup the type of pattern.
+:TRIG:PATT:PATT? The query returns 65535, 65535, DIG2, Positive.
+DURation Trigger
+1. :TRIGger:DURation:PATTern
+Command Format:
+:TRIGger:DURation:PATTern <value>,<mask>
+:TRIGger:DURation:PATTern?
+Function Explanation:；
+The commands set and query the type of pattern for digital signal. Thereinto,
+When <value> is a 16-bit integer without sign, high is 1, and low is o;
+When <mask> is a 16-bit integer without sign, enable is 1, and X is 0.
+Returned Format:
+The query returns the setting value of <value>, <mask> in turns.
+Example:
+:TRIG:DUR:PATT 65535,655535 Setup the type of pattern.
+:TRIG:DUR:PATT? The query returns 65535,65535.
+2. :TRIGger:DURation:TIME
+Command Format:
+:TRIGger:DURation:TIME <time>
+:TRIGger:DURation:TIME?
+Function Explanation:
+The commands set and query the limiting time of duration trigger. The range of
+<time> is 2ns~10s.
+Returned Format:
+The query returns the setting value of <time>.
+Example:
+:TRIG:DUR:TIME 0.05 Setup the limiting time of duration trigger as 50ms.
+:TRIG:DUR:TIME? The query returns 5.00e-02.
+3. :TRIGger:DURation:QUALifier
+Command Format:
+:TRIGger:DURation:QUALifier <qual>
+:TRIGger:DURation:QUALifier?
+Function Explanation:；
+The commands set and query the limiting condition of trigger time. <qual> could be GREaterthan, LESSthan or EQUal.
+Returned Format:
+The query returns GREATER THAN, LESS THAN or EQUAL.
+Example:
+:TRIG:DUR:QUAL GRE Setup the limiting condition as "GREaterthan".
+:TRIG:DUR:QUAL? The query returns GREATER THAN.
+ALTernation Trigger
+1. :TRIGger:ALTernation:SOURce
+Command Format:
+:TRIGger:ALTernation:SOURce <src>
+:TRIGger:ALTernation:SOURce?
+Function Explanation:
+The commands set and query which channel is to be used. <src> could be CHANnel1 or CHANnel2.
+Returned Format:
+The query returns CH1 or CH2.
+Example:
+:TRIG:ALT:SOUR CHAN2 Select CHANnel2 as current channel.
+:TRIG:ALT:SOUR? The query returns CH2.
+2. :TRIGger:ALTernation:TYPE
+Command Format:
+:TRIGger:ALTernation:TYPE <value>
+:TRIGger:ALTernation:TYPE?
+Function Explanation:
+The commands set and query the trigger type in alternation mode. <value> could be EDGE, PULSe, SLOPe or VIDEO.
+Returned Format:
+The query returns EDGE, PULSE, SLOPE or VIDEO.
+Example:
+:TRIG:ALT:TYPE EDGE Setup the trigger type as EDGE.
+:TRIG:ALT:TYPE? The query returns EDGE.
+3. :TRIGger:ALTernation:TimeSCALe
+Command Format:
+:TRIGger:ALTernation:TimeSCALe <value>
+:TRIGger:ALTernation:TimeSCALe?
+Function Explanation:
+The commands set and query the timebase of the current channel. The range of <value> is: 2ns～20ms.
+Returned Format:
+The query returns the setting value of the timebase in s.
+Example:
+:TRIG:ALT:TSCAL 0.001 Setup the timebase as 1ms.
+:TRIG:ALT:TSCAL? The query returns 1.000e-03.
+4. :TRIGger:ALTernation:TimeOFFSet
+Command Format:
+:TRIGger:ALTernation:TimeOFFSet <value>
+:TRIGger:ALTernation:TimeOFFSet?
+Function Explanation:
+The commands set and query the horizontal timebase offset of the current channel. Thereinto,
+In NORMAL mode, the range of <value> is 1s ~ end point of memory;
+In STOP mode, the range of <value> is -500s ~ +500s；
+In ROLL mode, the range of <value> is -6*scale ~ +6*Scale.
+Scale indicates the current horizontal scalre, the unit is s/div.
+Returned Format:
+The query returns the setting value of offset in s.
+Example:
+:TRIG:ALT:TOFFS 0.0002 Setup the horizontal timebase offset as 200us.
+:TRIG:ALT:TOFFS? The query returns 2.000e-04.
+5. :TRIGger:ALTernation<mode>:LEVel
+Command Format:
+:TRIGger:ALTernation<mode>:LEVel <value>
+:TRIGger:ALTernation<mode>:LEVel?
+Function Explanation:
+The commands set and query the trigger level of the current channel. <mode> could be :EDGE, :PULSe or :VIDEO. The range of <value> is - 6*Scale ~ + 6*Scale，Scale indicates the current vertical scale, the unit is V/div.
+Returned Format:
+The query returns the setting value of <value> in V.
+Example:
+:TRIG:ALT:EDGE:LEV 2 Setup the trigger level of the current channel as 2V.
+:TRIG:ALT:EDGE:LEV? The query returns 2.00e+00.
+6. :TRIGger:ALTernation:EDGE:SLOPe
+Command Format:
+:TRIGger:ALTernation:EDGE:SLOPe <value>
+:TRIGger:ALTernation:EDGE:SLOPe?
+Function Explanation:
+The commands set and query the current edge type. <value> could be POSitive (rising edge) or NEGative (falling edge).
+Returned Format:
+The query returns POSITIVE or NEGATIVE.
+Example:
+:TRIG:ALT:EDGE:SLOP POS Setup the edge type.
+:TRIG:ALT:EDGE:SLOP? The query returns POSITIVE.
+7. :TRIGger:ALTernation<mode>:MODE
+Command Format:
+:TRIGger:ALTernation<mode>:MODE <value>
+:TRIGger:ALTernation<mode>:MODE?
+Function Explanation:
+The commands set and query the current pulse condition and slope condition or the synchronization condition of the video trigger. <mode> could be :PULSe, :SLOPe or :VIDEO.
+In PULSe or SLOPe mode, the <value> could be +GREaterthan, +LESSthan, + EQUal, -GREaterthan, -LESSthan or -EQUal；
+In VIDEO mode, the <value> could be ODDfield, EVENfield, LINE or ALLlines.
+Returned Format:
+The query returns the setting value of <value>.
+Example:
+:TRIG:ALT:PULS:MODE +GRE Setup the pulse condition.
+:TRIG:ALT:PULS:MODE? The query returns +GREATER THAN.
+8. :TRIGger:ALTernation<mode>:TIME
+Command Format:
+:TRIGger:ALTernation<mode>:TIME <value>
+:TRIGger:ALTernation<mode>:TIME?
+Function Explanation:
+The commands set and query the current pulse width or slope time. <mode> could be :SLOPe or :PULSe, the range of <value> is 20ns~10s.
+Returned Format:
+The query returns the setting value of <value> in s.
+Example:
+:TRIG:ALT:SLOP:TIME 0.002 Setup the slope time as 2ms.
+:TRIG:ALT:SLOP:TIME? The query returns 2.000e-03
+9. :TRIGger:ALTernation:VIDEO:POLarity
+Command Format:
+:TRIGger:ALTernation:VIDEO:POLarity {POSitive|NEGative}
+:TRIGger:ALTernation:VIDEO:POLarity?
+Function Explanation:
+The commands set and query the current video polarity.
+Returned Format:
+The query returns POSITIVE or NEGATIVE.
+Example:
+:TRIG:ALT:VIDEO:POL POS Setup the video polarity as POSITIVE.
+:TRIG:ALT:VIDEO:POL? The query returns POSITIVE.
+10. :TRIGger:ALTernation:VIDEO:STANdard
+Command Format:
+:TRIGger:ALTernation:VIDEO:STANdard {NTSC|PALSecam}
+:TRIGger:ALTernation:VIDEO:STANdard?
+Function Explanation:
+The commands set and query the current video trigger standard.
+Returned Format:
+The query returns NTSC or PAL/SECAM.
+Example:
+:TRIG:ALT:VIDEO:STAN NTSC Setup the video standard as NTSC.
+:TRIG:ALT:VIDEO:STAN? The query returns NTSC.
+11. :TRIGger:ALTernation:VIDEO:LINE
+Command Format:
+:TRIGger:ALTernation:VIDEO:LINE <value>
+:TRIGger:ALTernation:VIDEO:LINE?
+Function Explanation:
+The commands set and query the current number of specified line in
+synchronous mode. In NTSC standard，the range of <value> is 1~525；In
+AL/SECAM standard, the range of <value> is 1~625.
+Returned Format:
+The query returns the setting value of <value>.
+Example:
+:TRIG:ALT:VIDEO:LINE 100 Setup the number of specified line in
+synchronous mode as 100.
+:TRIG:ALT:VIDEO:LINE? The query returns 100.
+12. :TRIGger:ALTernation:SLOPe:WINDow
+Command Format:
+:TRIGger:ALTernation:SLOPe:WINDow <count>
+:TRIGger:ALTernation:SLOPe:WINDow?
+Function Explanation:
+The commands set and query the type of trigger level which can be adjusted by
+in current state.
+When the slope is +GREaterthan, +LESSthan or + EQUal, the <count> could be
+PA (rising edge Level A), PB (rising edge Level B) or PAB (rising edge Level AB);
+When the slope condition is -GREaterthan, -LESSthan or –EQUal, the <count>
+could be NA (failing edge Level A), NB (failing edge LevelB) or NAB (failing edge
+LevelAB).
+Returned Format:
+The query returns P_WIN_A, P_WIN_B, P_WIN_AB, N_WIN_A, N_WIN_B or
+N_WIN_AB.
+Example:
+:TRIG:ALT:SLOP:WIND PA Setup the type of trigger level as rising edge
+Level A.
+:TRIG:ALT:SLOP:WIND? The query returns P_WIN_A.
+13. :TRIGger:ALTernation:SLOPe:LEVelA
+Command Format:
+:TRIGger:ALTernation:SLOPe:LEVelA <value>
+:TRIGger:ALTernation:SLOPe:LEVelA?
+Function Explanation:
+The commands set and query the current upper boundary "Level A" of trigger level in slope trigger mode. The range of <value> is LevelB ~ +6*Scale; Scale indicates the current vertical scale, the unit is V/div.
+Returned Format:
+The query returns the setting value of <value> in V.
+Example:
+:TRIG:ALT:SLOP:LEVA 2 Setup the upper boundary "Level A" of trigger level as 2V.
+:TRIG:ALT:SLOP:LEVA? The query returns 2.000e+00.
+14. :TRIGger:ALTernation:SLOPe:LEVelB
+Command Format:
+:TRIGger:ALTernation:SLOPe:LEVelB <value>
+:TRIGger:ALTernation:SLOPe:LEVelB?
+Function Explanation:
+The commands set and query the current lower boundary "Level B" of trigger level in slope trigger mode. The range of <value> is -6*Scale ~ LevelA，Scale indicates the current vertical scale, the unit is V/div.
+Note: The value of Level A (upper boundary) should not be less than the maximum of Level B (lower boundary).
+Returned Format:
+The query returns the setting value of <value> in V.
+Example:
+:TRIG:ALT:SLOP:LEVB -1.5 Setup the lower boundary "Level B" of trigger level as -1.5V.
+:TRIG:ALT:SLOP:LEVB ? The query returns -1.500e+00.
+15. :TRIGger:ALTernation<mode>:COUPling
+Command Format:
+:TRIGger:ALTernation<mode>:COUPling {DC|AC|HF|LF}
+:TRIGger:ALTernation<mode>:COUPling?
+Function Explanation:
+The commands set and query the coupling mode. Thereinto,
+DC: Allow all signals pass;
+AC: Block DC signals and attenuate the signals lower than10Hz;
+HF ( High frequency reject): Reject high frequency signals (Higher than 150
+KHz);
+LF ( Low frequency reject): Reject DC signals and attenuate low frequency
+signals (Lower than 8KHz).
+<mode>could be :EDGE, :PULSe or :SLOPe.
+Returned Format:
+The query returns DC , AC, HF or LF.
+Example:
+:TRIG:ALT:EDGE:COUP DC Setup the coupling mode as DC.
+:TRIG:ALT:EDGE:COUP? The query returns DC.
+16. :TRIGger:ALTernation<mode>:HOLDoff
+Command Format:
+:TRIGger:ALTernation<mode>:HOLDoff <count>
+:TRIGger:ALTernation<mode>:HOLDoff ?
+Function Explanation:
+The commands set and query the trigger holdoff. The <mode> could be EDGE, :PULSe, :SLOPe or :VIDEO. The range of <count> is 500ns~1.5s.
+Returned Format:
+The query returns the setting value of <count> in s.
+Example:
+:TRIG:ALT:PULS:HOLD 1 Setup the holdoff time as 1s.
+:TRIG:ALT:PULS:HOLD? The query returns 1.000e+00.
+17. :TRIGger:ALTernation<mode>:SENSitivity
+Command Format:
+:TRIGger:ALTernation<mode>:SENSitivity <count>
+:TRIGger:ALTernation<mode>:SLOPe:SENSitivity?
+Function Explanation:；
+The commands set and query the trigger sensitive. The <mode> could be :EDGE, :PULSe, :SLOPe or :VIDEO. The range of <count> is 0.1div ~1div.
+Returned Format:
+The query returns the setting value of <count> in div.
+Example:
+:TRIG:ALT:EDGE:SENS 0.5 Setup the trigger sensitive as 0.5div.
+:TRIG:ALT:EDGE:SLOP:SENS? The query returns 5.00e-01.
+STORage Command
+STORage Command is used for recalling the factory settings, including:
+:STORage:FACTory:LOAD
+The detailed information of each command are given as follows:
+1. :STORage:FACTory:LOAD
+Command Format:
+:STORage:FACTory:LOAD
+Function Explanation:
+The command recalls the system settings before leaving factory.
+MATH Commands
+MATH (math operation) Commands are used for executing the add, reduce, multiply and FFT operations of wavefrom from CH1 and CH2 and display the results. The results are measured by grid or cusor.
+MATH Commands include:
+:MATH:DISPlay
+:MATH:OPERate
+:FFT:DISPlay
+The detailed information of each command are given as follows:
+1. :MATH:DISPlay
+Command Format:
+:MATH:DISPlay {ON|OFF}
+:MATH:DISPlay?
+Function Explanation:
+The commands set and query the On/Off state of the math operation.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:MATH:DISP ON Enable math operation.
+:MATH:DISP? The query returns ON
+2. :MATH:OPERate
+Command Format:
+:MATH:OPERate <operate>
+:MATH:OPERate?
+Function Explanation:
+The commands set and query the math operation type of the current channel. <operate> could be A+B, A-B, AB or FFT.
+Returned Format:
+The query returns A+B, A-B, A*B or FFT.
+Example:
+:MATH:OPER A-B Setup the operation as A-B.
+:MATH:OPER? The query returns A-B.
+3. :FFT:DISPlay
+Command Format:
+:FFT:DISPlay {ON|OFF}
+:FFT:DISPlay?
+Function Explanation:
+The commands set and query the On/Off state of FFT operation.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:FFT:DISP ON Enable FFT operation.
+:FFT:DISP? The query returns ON.
+CHANnel Commands
+CHANnel Commands are used to control the two channels of the oscilloscope, each channel has an independent vertical menu and each option could be set separately based on different channels.
+CHANnel Commands include:
+:CHANnel<n>:BWLimit
+:CHANnel<n>:COUPling
+:CHANnel<n>:DISPlay
+:CHANnel<n>:INVert
+:CHANnel<n>:OFFSet
+:CHANnel<n>:PROBe
+:CHANnel<n>:SCALe
+:CHANnel<n>:FILTer
+:CHANnel<n>:MEMoryDepth?
+:CHANnel<n>:VERNier
+The detailed information of each command are given as follows:
+1. :CHANnel<n>:BWLimit
+Command Format:
+:CHANnel<n>:BWLimit {ON|OFF}
+:CHANnel<n>:BWLimit?
+Function Explanation:
+The commands set and query the On/Off state of bandwidth limit. <n> could be 1 or 2.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:CHAN2:BWL OFF Turn off the bandwidth limit to CH2.
+:CHAN2:BWL? The query returns OFF.
+2. :CHANnel<n>:COUPling
+Command Format:
+:CHANnel<n>:COUPling {DC|AC|GND}
+:CHANnel<n>:COUPling?
+Function Explanation:
+The commands set and query the coupling mode of channel. DC indicates both the AC and DC components passed from input signal; AC indicates the blocked DC components; GND indicates to cut off the input of signal; <n> could be 1 or 2.
+Returned Format:
+The query returns AC, DC or GND.
+Example:
+:CHAN2:COUP DC Enable the coupling mode of channel 2.
+:CHAN2:COUP? The query returns DC.
+3. :CHANnel<n>:DISPlay
+Command Format:
+:CHANnel<n>:DISPlay {ON|OFF}
+:CHANnel<n>:DISPlay?
+Function Explanation:
+The commands set and query the On/Off state of channel. <n> could be 1 or 2.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:CHAN2:DISP ON Open the display of Channel 2.
+:CHAN2:DISP? The query returns ON.
+4. :CHANnel<n>:INVert
+Command Format:
+:CHANnel<n>:INVert {ON|OFF}
+:CHANnel<n>:INVert?
+Function Explanation:
+The commands set and query the On/Off state of the waveform inverted. <n> could be 1 or 2.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:CHAN2:INV OFF Turn off the inverted display of Channel 2.
+:CHAN2:INV? The query returns OFF.
+5. :CHANnel<n>:OFFSet
+Command Format:
+:CHANnel<n>:OFFSet <offset>
+:CHANnel<n>:OFFSet?
+Function Explanation:
+The commands set and query the vertical offset. <n> could be 1 or 2.
+When Scale≥250mV, the range of <offset>is -40V~+40V;
+When Scale<250mV, the range of <offset>is -2V~+2V.
+Returned Format:
+The query returns the setting value of <offset>.
+Example:
+:CHAN2:OFFS 20 Setup the vertical offset of channel 2 as 20V.
+:CHAN2:OFFS? The query returns 2.000e+01.
+6. :CHANnel<n>:PROBe
+Command Format:
+:CHANnel<n>:PROBe <attn>
+:CHANnel<n>:PROBe?
+Function Explanation:
+The commands set and query the attenuation factor of the probe. <n> could be 1 or 2; <attn> could be 1, 5, 10, 50, 100, 500 or 1000.
+Returned Format:
+The query returns the setting value of <attn>.
+Example:
+:CHAN2:PROB 10 Setup the attenuation ratio of channel 2 as 10X.
+:CHAN2:PROB? The query returns 1.000e+01.
+7. :CHANnel<n>:SCALe
+Command Format:
+:CHANnel<n>:SCALe <range>
+:CHANnel<n>:SCALe?
+Function Explanation:
+The commands set and query the vertical scale of waveform magnified by the
+oscilloscope. <n> could be 1 or 2.
+When the Probe is set to 1X, the range of <range> is 2mV ~ 10V;
+When the Probe is set to 5X, the range of <range> is 10mV ~50V;
+When the Probe is set to 10X, the range of <range> is 20mV ~ 100V;
+When the Probe is set to 50X, the range of <range> is 100mV ~ 500V;
+When the Probe is set to 100X, the range of <range> is 200mV ~ 1000V;
+When the Probe is set to 500X, the range of <range> is 1V ~5000V;
+When the Probe is set to 1000X, the range of <range> is 2V~ 10000V.
+Returned Format:
+The query returns the setting value of <range> in V.
+Example:
+:CHAN2:PROB 10 Setup the attenuation ratio of the probe as 10X.
+:CHAN2:SCAL 20 Setup the vertical scale as 20V.
+:CHAN2:SCAL? The query returns 2.000e+01.
+8. :CHANnel<n>:FILTer
+Command Format:
+:CHANnel<n>:FILTer {ON|OFF}
+:CHANnel<n>:FILTer?
+Function Explanation:
+The commands set and query the On/Off state of the filter. <n> could be 1 or 2.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:CHAN2:FILT OFF Turn off the filter of Channel 2.
+:CHAN2:FILT? The query returns OFF.
+9. :CHANnel<n>:MEMoryDepth?
+Command Format:
+:CHANnel<n>:MEMoryDepth?
+Function Explanation:
+The command queries the memory depth of the specified channel. <n> could be 1 or 2.
+In long memory, up to 1Mpts could be stored in single channel and 512kpts in dual channels;
+In common memory, up to 16kpts could be stored in single channel and 8kpts in dual channels.
+Returned Format:
+Such as 8192 (8kpts).
+10. :CHANnel<n>:VERNier
+Command Format:
+:CHANnel<n>:VERNier {ON|OFF}
+:CHANnel<n>:VERNier?
+Function Explanation:
+The commands set and query the adjusting mode of scale. ON denotes Fine, OFF denotes Coarse; <n> could be 1 or 2.
+Returned Format:
+The query returns Coarse or Fine.
+Example:
+:CHAN2:VERN ON Enable Fine.
+:CHAN2:VERN? The query returns Fine.
+MEASure Commands
+MEASure Commands are used for the basic measurement only available for analog channel. Generally, the query returns the results in scientific notation.
+MEASure Commands include:
+:MEASure:CLEar
+:MEASure:VPP?
+:MEASure:VMAX?
+:MEASure:VMIN?
+:MEASure:VAMPlitude?
+:MEASure:VTOP?
+:MEASure:VBASe?
+:MEASure:VAVerage?
+:MEASure:VRMS?
+:MEASure:OVERshoot?
+:MEASure:PREShoot?
+:MEASure:FREQuency?
+:MEASure:RISetime?
+:MEASure:FALLtime?
+:MEASure:PERiod?
+:MEASure:PWIDth?
+:MEASure:NWIDth?
+:MEASure:PDUTycycle?
+:MEASure:NDUTycycle?
+:MEASure:PDELay?
+:MEASure:NDELay?
+:MEASure:TOTal
+:MEASure:SOURce
+The detailed information of each command are given as follows:
+1. :MEASure:CLEar
+Command Format:
+:MEASure:CLEar
+Function Explanation:
+The command clears the current parameter value.
+2. :MEASure:VPP?
+Command Format:
+:MEASure:VPP? [<source>]
+Function Explanation:
+The command queries the peak-peak value of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.12e+03, the unit is V.
+3. :MEASure:VMAX?
+Command Format:
+:MEASure:VMAX? [<source>]
+Function Explanation:
+The command queries the maximum of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 2.60e+03, the unit is V.
+4. :MEASure:VMIN?
+Command Format:
+:MEASure:VMIN? [<source>]
+Function Explanation:
+The command queries the minimum of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: -2.52e+03, the unit is V.
+5. :MEASure:VAMPlitude?
+Command Format:
+:MEASure:VAMPlitude? [<source>]
+Function Explanation:
+The command queries the amplitude of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.07e+03, the unit is V.
+6. :MEASure:VTOP?
+Command Format:
+:MEASure:VTOP? [<source>]
+Function Explanation:
+The command queries the top value of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 2.55e+03, the unit is V.
+7. :MEASure:VBASe?
+Command Format:
+:MEASure:VBASe? [<source>]
+Function Explanation:
+The command queries the bottom value of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: -2.52e+03, the unit is V.
+8. :MEASure:VAVerage?
+Command Format:
+:MEASure:VAVerage? [<source>]
+Function Explanation:
+The command queries the average value of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 4.01e+01, the unit is V.
+9. :MEASure:VRMS?
+Command Format:
+:MEASure:VRMS? [<source>]
+Function Explanation:
+The command queries the root-mean-square value of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 1.78e+03, the unit is V.
+10. :MEASure:OVERshoot?
+Command Format:
+:MEASure:OVERshoot? [<source>]
+Function Explanation:
+The command queries the overshoot of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 1.74e-02.
+11. :MEASure:PREShoot?
+Command Format:
+:MEASure:PREShoot? [<source>]
+Function Explanation:
+The command queries the preshoot of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 0.00e+00.
+12. :MEASure:FREQuency?
+Command Format:
+:MEASure:FREQuency? [<source>]
+Function Explanation:
+The command queries the frequency of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 1.00e+03, the unit is Hz.
+13. :MEASure:RISetime?
+Command Format:
+:MEASure:RISetime? [<source>]
+Function Explanation:
+The command queries the rising time of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 3.10e-04, the unit is s.
+14. :MEASure:FALLtime?
+Command Format:
+:MEASure:FALLtime? [<source>]
+Function Explanation:
+The command measures the falling time of the waveform. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 3.10e-04, the unit is s.
+15. :MEASure:PERiod?
+Command Format:
+:MEASure:PERiod? [<source>]
+Function Explanation:
+The command queries the period of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 1.00e-03, the unit is s.
+16. :MEASure:PWIDth?
+Command Format:
+:MEASure:PWIDth? [<source>]
+Function Explanation:
+The command queries the positive pulse width of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.00e-04, the unit is s.
+17. :MEASure:NWIDth?
+Command Format:
+:MEASure:NWIDth? [<source>]
+Function Explanation:
+The command queries the negative pulse width of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.00e-04, the unit is s.
+18. :MEASure:PDUTycycle?
+Command Format:
+:MEASure:PDUTycycle? [<source>]
+Function Explanation:
+The command queries the positive duty cycle of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.00e-01.
+19. :MEASure:NDUTycycle?
+Command Format:
+:MEASure:NDUTycycle? [<source>]
+Function Explanation:
+The command queries the negative duty cycle of the waveform under measure. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: 5.00e-01.
+20. :MEASure:PDELay?
+Command Format:
+:MEASure:PDELay? [<source>]
+Function Explanation:
+The command queries the delay relative to rising edge of channel1 or channel 2. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: <-1.00e-04.
+21. :MEASure:NDELay?
+Command Format:
+:MEASure:NDELay? [<source>]
+Function Explanation:
+The command queries the delay relative to falling edge of channel1 or channel 2. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+Such as: <1.00e-04.
+22. :MEASure:TOTal
+Command Format:
+:MEASure:TOTal {ON|OFF}
+:MEASure:TOTal?
+Function Explanation:
+The commands set and query the On/Off state of all measurement functions.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:MEAS:TOT ON Turn on all measurements.
+:MEAS:TOT? The query returns ON.
+23. :MEASure:SOURce
+Command Format:
+:MEASure:SOURce <source>
+:MEASure:SOURce?
+Function Explanation:
+The commands select and query the current measured channel. <source> could be CHANnel1 or CHANnel2.
+Returned Format:
+The query returns CH1 or CH2.
+Example:
+:MEAS:SOUR CHAN1 Select the waveform form CH1 to measure.
+:MEAS:SOUR? The query returns CH1
+WAVeform Command
+WAVeform Command reads the waveform data on the screen of the oscilloscope and returns up to 1024 data.
+WAVeform Command includes:
+:WAVeform:DATA?
+:WAVeform:POINts:MODE
+The detailed information of each command are given as follows:
+1. :WAVeform:DATA?
+Command Format:
+:WAVeform:DATA? [<source>]
+Function Explanation:
+The command reads the waveform data in the specified source. <source> could be CHANnel1, CHANnel2, DIGital, MATH or FFT.
+Returned Format:
+The query returns 1024 data.
+2. :WAVeform:POINts:MODE
+Command Format:
+:WAVeform:POINts:MODE <points_mode>
+:WAVeform:POINts:MODE?
+Function Explanation:
+This command sets the mode of waveform points. <points_mode> can be: NORMal, MAXimum or RAW.
+Data points returned by :WAVeform:DATA? in different modes:
+NORmal
+RAW
+MAX
+Normal Memory
+Long Memory
+In RUN state, MAX is the same with NORMal; in STOP state, MAX is the same with RAW.
+MATH
+600
+600
+600
+FFT
+512
+512
+512
+CHx
+600
+8192(8k)
+524288(512k)
+Half-
+Channel
+CHx*
+600
+16384(16k)
+1048576(1M)
+DIGITAL
+600
+16384(16k)
+1048576(1M)
+*Note: Half-channel means only one channel is open and the MATH is closed.
+Returned Format:
+The query returns NORMal, MAXimum or RAW.
+Example:
+:WAV:POIN:MODE NORM Set the mode as NORMal.
+:WAV:POIN:MODE? Return NORMal.
+LA Commands
+LA Commands are used for controlling the acquisition and analysis to digital signals executed by logic analyzer.
+LA Commands include:
+:LA:DISPlay
+:DIGital<n>:TURN
+:DIGital<n>:POSition
+:LA:THReshold
+:LA:POSition:RESet
+:LA:GROUp
+:LA:GROUp<n>:SIZe
+The detailed information of each command are given as follows:
+1. :LA:DISPlay
+Command Format:
+:LA:DISPlay {ON|OFF}
+:LA:DISPlay?
+Function Explanation:
+The commands set and query the On/Off state of digital channel.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:LA:DISP ON Open the digital channel.
+:LA:DISP? The query returns ON.
+2. :DIGital<n>:TURN
+Command Format:
+:DIGital<n>:TURN {ON|OFF}
+:DIGital<n>:TURN?
+Function Explanation:
+The commands set and query the On/Off state of specified channel in digital channel. The range of <n> is 0～15.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:DIG2:TURN ON Open the digital channel 2.
+:DIG2:TURN? The query returns ON.
+3. :DIGital<n>:POSition
+Command Format:
+:DIGital<n>:POSition <position>
+:DIGital<n>:POSition?
+Function Explanation:
+The commands set and query the waveform display position of specified channel. <n> could be 0～15.
+When choose Big-waveform, up to 8 waveforms could be displayed on the screen, and the range of <position> is 0~7;
+when choose Small-waveform, up to 16 waveforms could be displayed on the screen, and the range of <position> is 0~15.
+Returned Format:
+The query returns the setting value of <position>.
+Example:
+:DIG2:POS 3 Setup the waveform of digital channel2 displays at the position of D3.
+:DIG2:POS? The query returns 3.
+4. :LA:THReshold
+Command Format:
+:LA:THReshold<value>[suffix]
+:LA:THReshold?
+Function Explanation:
+The commands set and query the type of threshold of digital channel. <value> could be TTL, CMOS, ECL or User (User-defined, the range is -8.00～+8.00). suffix could be V or mV, the minimum interval is 10mV.
+Example:
+:LA:THR COMS Setup the type of threshold as COMS.
+:LA:THR? The query returns COMS.
+5. :LA:POSition:RESet
+Command Format:
+:LA:POSition:RESet
+Function Explanation:
+The command resets the waveform display position, that is to get the jumbled waves on the screen return to normal.
+6. :LA:GROUp
+Command Format:
+:LA:GROUp<n> {ON|OFF}
+:LA:GROUp<n>?
+Function Explanation:
+The commands set and query the On/Off state of GROUp1 (D7~D0) and GROUp2 (D15~D8). <n> could be 1 or 2.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:LA:GROU1 ON Turn on the group D7~D0.
+:LA:GROU1? The query returns ON.
+7. :LA:GROUp<n>:SIZe
+Command Format:
+:LA:GROUp<n>:SIZe <size>
+:LA:GROUp<n>:SIZe?
+Function Explanation:
+The commands set and query the waveform size from group. <n> could be 1 or 2. <size> could be Small or Big, which represents to display 16 channels or 8 channels.
+Returned Format:
+The query returns SMALL or BIG.
+Example:
+:LA:GROU1:SIZ S Setup the waveform size from GROUp1 as Small.
+:LA:GROU1:SIZ? The query returns SMALL.
+KEY Commands
+KEY Commands are used for controlling the buttons and knobs on the panel of DS1000E，DS1000D series digital oscilloscopes.
+KEY Commands include:
+:KEY:LOCK
+:KEY:RUN
+:KEY:AUTO
+:KEY:CHANnel1
+:KEY:CHANnel2
+:KEY:MATH
+:KEY:REF
+:KEY:F1
+:KEY:F2
+:KEY:F3
+:KEY:F4
+:KEY:F5
+:KEY:MNUoff
+:KEY:MEASure
+:KEY:CURSor
+:KEY:ACQuire
+:KEY:DISPlay
+:KEY:STORage
+:KEY:UTILity
+:KEY:MNUTIME
+:KEY:MNUTRIG
+:KEY:Trig%50
+:KEY:FORCe
+:KEY:V_POS_INC
+:KEY:V_POS_DEC
+:KEY:V_SCALE_INC
+:KEY:V_SCALE_DEC
+:KEY:H_SCALE_INC
+:KEY:H_SCALE_DEC
+:KEY:TRIG_LVL_INC
+:KEY:TRIG_LVL_DEC
+:KEY:H_POS_INC
+:KEY:H_POS_DEC
+:KEY:PROMPT_V
+:KEY:PROMPT_H
+:KEY:FUNCtion
+:KEY:+FUNCtion
+:KEY:-FUNCtion
+:KEY:LA
+:KEY:PROMPT_V_POS
+:KEY:PROMPT_H_POS
+:KEY:PROMPT_TRIG_LVL
+:KEY:OFF
+The detailed information of each command are given as follows:
+1. :KEY:LOCK
+Command Format:
+:KEY:LOCK {ENABle|DISable}
+:KEY:LOCK?
+Function Explanation:
+This command is used to enable/disable the buttons function on the front panel (except for "Force").
+Returned Format:
+The query returns ENABLE or DISABLE.
+Example:
+:KEY:LOCK ENAB Enable the buttons on the front panel
+:KEY:LOCK? The query returns ENABLE.
+2. :KEY:RUN
+Command Format:
+:KEY:RUN
+Function Explanation:
+The command controls the operating mode of the oscilloscope. The running state will switch between ON and OFF if send this command continuously.
+3. :KEY:AUTO
+Command Format:
+:KEY:AUTO
+Function Explanation:
+The command sets every control values of the oscilloscope automatically in order to output appropriate waveforms for better observation.
+4. :KEY:CHANnel1
+Command Format:
+:KEY:CHANnel1
+Function Explanation:
+The command enables or disables Channel 1 and its menu display. The On/Off state of the channel along with its menu switched once you send this command continuously.
+5. :KEY:CHANnel2
+Command Format:
+:KEY:CHANnel2
+Function Explanation:
+The command enables or disables Channel 2 and its menu display. The On/Off state of the channel along with its menu switched once you send this command continuously.
+6. :KEY:MATH
+Command Format:
+:KEY:MATH
+Function Explanation:
+The command enables or disables Math function and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+7. :KEY:REF
+Command Format:
+:KEY:REF
+Function Explanation:
+The command enables or disables Waveform Reference and its menu display. The On/Off state of this function along with its menu switched once you send
+this command continuously.
+8. :KEY:F1
+Command Format:
+:KEY:F1
+Function Explanation:
+The command controls the option corresponds to F1. If some options exist in the drop-down menu relative to this key, repeat this command to select those options circularly.
+9. :KEY:F2
+Command Format:
+:KEY:F2
+Function Explanation:
+The command controls the option corresponds to F2. If some options exist in the drop-down menu relative to this key, repeat this command to select those options circularly.
+10. :KEY:F3
+Command Format:
+:KEY:F3
+Function Explanation:
+The command controls the option corresponds to F3. If some options exist in the drop-down menu relative to this key, repeat this command to select those options circularly.
+11. :KEY:F4
+Command Format:
+:KEY:F4
+Function Explanation:
+The command controls the option corresponds to F4. If some options exist in the drop-down menu relative to this key, repeat this command to select those options circularly.
+12. :KEY:F5
+Command Format:
+:KEY:F5
+Function Explanation:
+The command controls the option corresponds to F5. If some options exist in the drop-down menu relative to this key, repeat this command to select those options circularly.
+13. :KEY:MNUoff
+Command Format:
+:KEY:MNUoff
+Function Explanation:
+The command enables or disables the current menu display. The On/Off state of this function switched once you send this command continuously.
+14. :KEY:MEASure
+Command Format:
+:KEY:MEASure
+Function Explanation:
+The command enables or disables Measure function and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+15. :KEY:CURSor
+Command Format:
+:KEY:CURSor
+Function Explanation:
+The command enables or disables Cursor measurement and its menu display.
+If send this command continuously, the oscilloscope will switch among Turn off cursor, Manual, Track and Auto.
+16. :KEY:ACQuire
+Command Format:
+:KEY:ACQuire
+Function Explanation:
+The command enables or disables Sample function and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+17. :KEY:DISPlay
+Command Format:
+:KEY:DISPlay
+Function Explanation:
+The command enables or disables Display function and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+18. :KEY:STORage
+Command Format:
+:KEY:STORage
+Function Explanation:
+The command enables or disables Storage function and its menu display. The On/Off state of this function along with its menu switched once you send this
+command continuously.
+19. :KEY:UTILity
+Command Format:
+:KEY:UTILity
+Function Explanation:
+The command enables or disables Utility function and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+20. :KEY:MNUTIME
+Command Format:
+:KEY:MNUTIME
+Function Explanation:
+The command enables or disables Horizontal system and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+21. :KEY:MNUTRIG
+Command Format:
+:KEY:MNUTRIG
+Function Explanation:
+The command enables or disables Trigger and its menu display. The On/Off state of this function along with its menu switched once you send this command continuously.
+22. :KEY:Trig%50
+Command Format:
+:KEY:Trig%50
+Function Explanation:
+The command sets the trigger level to the midpoint of the signal amplitude.
+23. :KEY:FORCe
+Command Format:
+:KEY:FORCe
+Function Explanation:
+The command unlocks the remote control.
+24. :KEY:V_POS_INC
+Command Format:
+:KEY:V_POS_INC
+Function Explanation:
+The command increases the vertical scale of the current channel in uniformly spaced.
+25. :KEY:V_POS_DEC
+Command Format:
+:KEY:V_POS_DEC
+Function Explanation:
+The command reduces the vertical scale of the current channel in uniformly spaced.
+26. :KEY:V_SCALE_INC
+Command Format:
+:KEY:V_SCALE_INC
+Function Explanation:
+The command is used to increase the vertical scale of the current channel.
+27. :KEY:V_SCALE_DEC
+Command Format:
+:KEY:V_SCALE_DEC
+Function Explanation:
+The command is used to reduce the vertical scale of the current channel.
+28. :KEY:H_SCALE_INC
+Command Format:
+:KEY:H_SCALE_INC
+Function Explanation:
+The command reduces the horizontal scale of the current channel in -1.
+29. :KEY:H_SCALE_DEC
+Command Format:
+:KEY:H_SCALE_DEC
+Function Explanation:
+The command increases the horizontal scale of the current channel in -5.
+30. :KEY:TRIG_LVL_INC
+Command Format:
+:KEY:TRIG_LVL_INC
+Function Explanation:
+The command increases the trigger level in uniformly spaced.
+31. :KEY:TRIG_LVL_DEC
+Command Format:
+:KEY:TRIG_LVL_DEC
+Function Explanation:
+The command reduces the trigger level in uniformly spaced.
+32. :KEY:H_POS_INC
+Command Format:
+:KEY:H_POS_INC
+Function Explanation:
+The command increases the horizontal offset of the current channel in uniformly spaced.
+33. :KEY:H_POS_DEC
+Command Format:
+:KEY:H_POS_DEC
+Function Explanation:
+The command reduces the horizontal offset of the current channel in uniformly spaced.
+34. :KEY:PROMPT_V
+Command Format:
+:KEY:PROMPT_V
+Function Explanation:
+The command switches the adjust mode of the vertical scale to Coarse or Fine. Coarse steps in -5 and Coarse steps in uniformly spaced.
+35. :KEY:PROMPT_H
+Command Format:
+:KEY:PROMPT_H
+Function Explanation:
+The command enables or disables the Delayed function. The On/Off state of the analyzer switched once you send this command continuously.
+36. :KEY:FUNCtion
+Command Format:
+:KEY:FUNCtion
+Function Explanation:
+The command enables the multi-function knob.
+37. :KEY:+FUNCtion
+Command Format:
+:KEY:+FUNCtion
+Function Explanation:
+The command increases the offset of the multi-function knob.
+38. :KEY:-FUNCtion
+Command Format:
+:KEY:-FUNCtion
+Function Explanation:
+The command reduces the offset of the multi-function knob.
+39. :KEY:LA
+Command Format:
+:KEY:LA
+Function Explanation:
+The command enables or disables the logic analyzer built-in the oscilloscope.
+The On/Off state of the analyzer switched once you send this command continuously.
+40. :KEY:PROMPT_V_POS
+Command Format:
+:KEY:PROMPT_V_POS
+Function Explanation:
+The command resets the vertical offset to zero.
+41. :KEY:PROMPT_H_POS
+Command Format:
+:KEY:PROMPT_H_POS
+Function Explanation:
+The command resets the trigger offset (or the delay offset) to zero.
+42. :KEY:PROMPT_TRIG_LVL
+Command Format:
+:KEY:PROMPT_TRIG_LVL
+Function Explanation:
+The command resets the position of trigger level to the center of the screen.
+43. :KEY:OFF
+Command Format:
+:KEY:OFF
+Function Explanation:
+The command turns off the CH1, CH2, MATH, REF and LA channel one by one through sending the command continuously.
+Other Commands
+Besides above basic commands, also there are other commands used for system language, frequency counter and beep control.
+Other Commands include:
+:INFO:LANGuage
+:COUNter:ENABle
+:BEEP:ENABle
+:BEEP:ACTion
+The detailed information of each command are given as follows:
+Programming Examples RIGOL
+1. :INFO:LANGuage
+Command Format:
+:INFO:LANGuage <lang>
+:INFO:LANGuage?
+Function Explanation:
+The commands set and query the type of system language. <lang> could be SIMPlifiedChinese, TRADitionalChinese, ENGLish, KORean, JAPanese, FRENch, GERMan, RUSSian, SPANish or PORTuguese.
+Returned Format:
+The query returns Simplified Chinese, Traditional Chinese, English, Korean, Japanese, French, German, Russian, Spanish or Portuguese.
+Example:
+:INFO:LANG SIMP Setup the system language as SIMPlifiedChinese.
+:INFO:LANG? The query returns Simplified Chinese.
+2. :COUNter:ENABle
+Command Format:
+:COUNter:ENABle {ON|OFF} :COUNter:ENABle?
+Function Explanation:
+The commands set and query the On/Off state of the cymometer of the oscilloscope.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:COUN:ENAB ON Turn on the frequency counter.
+:COUN:ENAB? The query returns ON.
+3. :BEEP:ENABle
+RIGOL Programming Examples
+Command Format:
+:BEEP:ENABle {ON|OFF}
+:BEEP:ENABle?
+Function Explanation:
+The commands set and query the On/Off state of the beeper.
+Returned Format:
+The query returns ON or OFF.
+Example:
+:BEEP:ENAB ON Turn on the beeper.
+:BEEP:ENAB? The query returns ON.
+4. :BEEP:ACTion
+Command Format:
+:BEEP:ACTion
+Function Explanation:
+The command makes the oscilloscope buzzed once (no matter whether the beeper is on or not).

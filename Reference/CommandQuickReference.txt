@@ -59,9 +59,6 @@ K
 :KEY:CURSor 2-79
 :KEY:ACQuire 2-80
 :KEY:DISPlay 2-80
-RIGOL Command Quick Reference A-Z
-Programming Guide for DS1000E, DS1000D Series
-2
 :KEY:STORage 2-80
 :KEY:UTILity 2-81
 :KEY:MNUTIME 2-81
@@ -133,9 +130,6 @@ T
 :TRIGger:MODE 2-22
 :TRIGger<mode>:SOURce 2-22
 :TRIGger<mode>:LEVel 2-23
-Command Quick Reference A-Z RIGOL
-Programming Guide for DS1000E, DS1000D Series
-3
 :TRIGger<mode>:SWEep 2-23
 :TRIGger<mode>:COUPling 2-24
 :TRIGger:HOLDoff 2-24
