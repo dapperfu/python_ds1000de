@@ -3,7 +3,7 @@ import visa
 
 class DS1000DE(object):
     def __init__(self, device="USB0"):
-        rm = visa.ResourceManager()
+        rm = visa.ResourceManager("@py")
         resources = rm.list_resources()
         
         resource = [resource for resource in resources if device in resource]
