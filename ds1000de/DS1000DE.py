@@ -3,8 +3,13 @@
 
 import visa
 
+from .Acquire import Acquire
+from .IO import IO
+from .System import System
 
-class DS1000DE(object):
+
+class DS1000DE(System,
+               IO):
     """Python class for Rigol DS1000DE series oscilloscopes."""
 
     def __init__(self, device="USB"):
@@ -28,6 +33,13 @@ class DS1000DE(object):
         self.inst = rm.open_resource(self.resource)
         self.r = self.inst.query
         self.w = self.inst.write
+
+        self.acquire = Acquire(self)
+
+    def reset(self):
+        """Reset the scope."""
+        _, status = self.w("*RST")
+        assert(status.value == 0)
 
     @property
     def idn(self):
